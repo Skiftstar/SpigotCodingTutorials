@@ -1,0 +1,10 @@
+name: FlySpeed
+author: Yukami
+version: 1.0.0
+main: Yukami.FlySpeed.Main
+
+commands:
+  fly:
+    description: Allows the user to toggle flight mode
+  speed:
+    description: Allows the user to change his walking or flying speed
