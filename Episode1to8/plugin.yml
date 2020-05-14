@@ -1,0 +1,13 @@
+name: Tutorial
+version: 1.0
+main: Skifty.Tutorial.Main
+author: Skifty
+
+commands:
+  hello:
+    aliases: [hi, hay]
+    description: A hello command
+  tc:
+    description: staffChat
+  getItem:
+    description: get an item
