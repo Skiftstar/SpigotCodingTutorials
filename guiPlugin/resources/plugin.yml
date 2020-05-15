@@ -1,0 +1,8 @@
+name: gui
+author: Yukami
+version: 1.0.0
+main: Yukami.GUI.Main
+
+commands:
+  gui:
+    description: gui
