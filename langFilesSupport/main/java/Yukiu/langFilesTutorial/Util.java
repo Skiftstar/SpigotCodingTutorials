@@ -15,29 +15,24 @@ import java.util.Map;
 
 public class Util {
 
-    private static Map<Player, File> localeSettings = new HashMap<>();
-    private static Map<File, Map<String, String>> messages = new HashMap<>();
+    private static Map<Player, String> localeSettings = new HashMap<>();
+    private static Map<String, Map<String, String>> messages = new HashMap<>();
+    public static List<String> files = new ArrayList<>();
 
     public static String getMessage(String locale, String messName) {
-        File langFile = new File(Main.getInstance().getDataFolder() + "/locales", locale + ".yml");
-        return messages.get(langFile).get(messName);
-    }
-
-    public static String getMessage(File file, String messName) {
-        return messages.get(file).get(messName);
+        return messages.getOrDefault(locale, "en").getOrDefault(messName, "Message " + messName + " not set!");
     }
 
     public static File getLocale(Player p) {
         return localeSettings.get(p);
     }
 
-    public static void setLocale(Player p, File file) {
+    public static void setLocale(Player p, String string) {
         localeSettings.remove(p);
-        if (!file.exists()) {
-            File locale = new File(Main.getInstance().getDataFolder() + "/locales", "en.yml");
-            localeSettings.put(p, locale);
+        if (!files.contains(string)) {
+            p.sendMessage("This language File doesn't exist!")
         } else {
-            localeSettings.put(p, file);
+            localeSettings.put(p, string);
         }
     }
 
@@ -70,7 +65,9 @@ public class Util {
                     localeMessages.put(messName, message);
                 }
             }
-            messages.put(file, localeMessages);
+            String fileName = file.getName().split(".yml")[0];
+            messages.put(fileName, localeMessages);
+            files.add(fileName);
             System.out.println(file.getName() + "loaded!");
         }
     }
