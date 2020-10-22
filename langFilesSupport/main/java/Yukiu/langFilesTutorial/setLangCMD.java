@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class setLangCMD implements CommandExecutor, Listener, TabCompleter {
-
+    
+   
 
     public setLangCMD(Main plugin) {
         plugin.getCommand("setLang").setExecutor(this);
@@ -37,8 +38,7 @@ public class setLangCMD implements CommandExecutor, Listener, TabCompleter {
             return;
         }
         String localeFileName = config.getString(uuid.toString());
-        File langFile = new File(Main.getInstance().getDataFolder() + "/locales", localeFileName + ".yml");
-        Util.setLocale(p, langFile);
+        Util.setLocale(p, localeFileName.toLowerCase());
     }
 
     @EventHandler
