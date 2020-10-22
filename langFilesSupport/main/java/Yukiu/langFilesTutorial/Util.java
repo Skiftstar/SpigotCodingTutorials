@@ -5,12 +5,13 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.yaml.snakeyaml.error.YAMLException;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Util {
@@ -20,19 +21,22 @@ public class Util {
     public static List<String> files = new ArrayList<>();
 
     public static String getMessage(String locale, String messName) {
-        return messages.getOrDefault(locale, "en").getOrDefault(messName, "Message " + messName + " not set!");
+        return messages.getOrDefault(locale, messages.get("en")).getOrDefault(messName, "Message " + messName + " not set!");
     }
 
-    public static File getLocale(Player p) {
+    public static String getLocale(Player p) {
         return localeSettings.get(p);
     }
 
     public static void setLocale(Player p, String string) {
         localeSettings.remove(p);
         if (!files.contains(string)) {
-            p.sendMessage("This language File doesn't exist!")
+            p.sendMessage(Util.getMessage(Util.getLocale(p), "LocaleNoExist"));
         } else {
             localeSettings.put(p, string);
+            p.sendMessage(Util.getMessage(Util.getLocale(p), "LocaleSet"));
+            Main.getInstance().getConfig().set(p.getUniqueId().toString(), string);
+            Main.getInstance().saveConfig();
         }
     }
 

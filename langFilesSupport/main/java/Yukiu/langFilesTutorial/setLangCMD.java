@@ -1,6 +1,5 @@
 package Yukiu.langFilesTutorial;
 
-import javafx.print.PageLayout;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,15 +10,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class setLangCMD implements CommandExecutor, Listener, TabCompleter {
-    
-   
+
+
 
     public setLangCMD(Main plugin) {
         plugin.getCommand("setLang").setExecutor(this);
@@ -32,7 +30,7 @@ public class setLangCMD implements CommandExecutor, Listener, TabCompleter {
         Player p = e.getPlayer();
         UUID uuid = p.getUniqueId();
         if (config.get(uuid.toString()) == null) {
-            Util.setLocale(p, new File(Main.getInstance().getDataFolder() + "/locales", "en.yml"));
+            Util.setLocale(p,  "en");
             config.set(uuid.toString(), "en");
             Main.getInstance().saveConfig();
             return;
@@ -58,15 +56,7 @@ public class setLangCMD implements CommandExecutor, Listener, TabCompleter {
             return false;
         }
         String fileName = strings[0];
-        File file = new File(Main.getInstance().getDataFolder() + "/locales", fileName + ".yml");
-        if (!file.exists()) {
-            p.sendMessage(Util.getMessage(Util.getLocale(p), "LocaleNoExist"));
-            return false;
-        }
-        Util.setLocale(p, file);
-        p.sendMessage(Util.getMessage(Util.getLocale(p), "LocaleSet"));
-        Main.getInstance().getConfig().set(p.getUniqueId().toString(), fileName);
-        Main.getInstance().saveConfig();
+        Util.setLocale(p, fileName);
         return true;
     }
 
